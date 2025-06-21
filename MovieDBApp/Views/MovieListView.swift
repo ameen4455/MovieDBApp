@@ -28,10 +28,12 @@ struct MovieListView: View {
                         }
                     } else {
                         ForEach(viewModel.movies) { movie in
-                            MovieRow(movie: movie)
-                                .onAppear {
-                                    viewModel.shouldLoadMore(movie: movie)
-                                }
+                            NavigationLink(destination: MovieDetailView(movie: movie)) {
+                                MovieRow(movie: movie)
+                                    .onAppear {
+                                        viewModel.shouldLoadMore(movie: movie)
+                                    }
+                            }
                         }
 
                         if viewModel.isLoading {
@@ -60,7 +62,6 @@ struct MovieRow: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack(alignment: .center, spacing: 12) {
-
                 
                 RemoteImageView(url: movie.fullPosterURL)
                     .frame(width: 120, height: 180)
@@ -70,6 +71,7 @@ struct MovieRow: View {
                     Text(movie.title)
                         .font(.headline)
                         .lineLimit(2)
+                        .multilineTextAlignment(.leading)
                     Text(movie.releaseDate ?? "N/A")
                         .font(.subheadline)
                         .foregroundColor(.gray)
@@ -80,6 +82,7 @@ struct MovieRow: View {
                         .font(.body)
                         .lineLimit(3)
                         .padding(.top, 4)
+                        .multilineTextAlignment(.leading)
                 }
             }
             .padding(.vertical)
