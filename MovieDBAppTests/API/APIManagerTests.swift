@@ -32,7 +32,7 @@ final class APIManagerTests: XCTestCase {
         mockSession.data = jsonData
         mockSession.response = httpResponse
 
-        let receivedData: TestCodable = try await sut.request(request: request)
+        let receivedData: TestCodable = try await sut.request(apiRequest: request)
 
         XCTAssertEqual(receivedData, expectedData, "The decoded data should match the expected data.")
     }
@@ -46,7 +46,7 @@ final class APIManagerTests: XCTestCase {
         mockSession.response = httpResponse
 
         do {
-            let _: EmptyDecodable = try await sut.request(request: apiRequest)
+            let _: EmptyDecodable = try await sut.request(apiRequest: apiRequest)
             XCTFail("Expected networkError but no error was thrown.")
         } catch let error as NetworkError {
             XCTAssertEqual(error, NetworkError.networkError, "Expected networkError for non-2xx status code.")
@@ -66,7 +66,7 @@ final class APIManagerTests: XCTestCase {
 
        // Act & Assert
        do {
-           let _: EmptyDecodable = try await sut.request(request: apiRequest)
+           let _: EmptyDecodable = try await sut.request(apiRequest: apiRequest)
            XCTFail("Expected NetworkError.urlError but no error was thrown.")
        } catch let error as NetworkError {
            XCTAssertEqual(error, NetworkError.invalidUrl, "Expected urlError for an invalid URL string.")
@@ -89,7 +89,7 @@ final class APIManagerTests: XCTestCase {
        mockSession.error = nil // No network error, the issue is with decoding
 
        do {
-           let _: TestCodable = try await sut.request(request: apiRequest)
+           let _: TestCodable = try await sut.request(apiRequest: apiRequest)
            XCTFail("Expected NetworkError.parsingError but no error was thrown.")
        } catch let error as NetworkError {
            XCTAssertEqual(error, NetworkError.parsingError, "Expected parsingError for invalid JSON structure.")
@@ -109,7 +109,7 @@ final class APIManagerTests: XCTestCase {
        mockSession.error = networkConnectionError
 
        do {
-           let _: EmptyDecodable = try await sut.request(request: apiRequest)
+           let _: EmptyDecodable = try await sut.request(apiRequest: apiRequest)
            XCTFail("Expected networkError but no error was thrown.")
        } catch let error as NetworkError {
            XCTAssertEqual(error, NetworkError.networkError, "Expected networkError for underlying network failure.")

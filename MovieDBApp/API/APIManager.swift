@@ -8,7 +8,7 @@
 import Foundation
 
 protocol APIManagerProtocol {
-    func request<T: Decodable>(request: APIRequest) async throws -> T
+    func request<T: Decodable>(apiRequest: APIRequest) async throws -> T
 }
 
 class APIManager: APIManagerProtocol {
@@ -18,8 +18,8 @@ class APIManager: APIManagerProtocol {
         self.session = session
     }
     
-    func request<T: Decodable>(request: APIRequest) async throws -> T {
-        guard let urlRequest = request.makeURLRequest() else {
+    func request<T: Decodable>(apiRequest: APIRequest) async throws -> T {
+        guard let urlRequest = apiRequest.makeURLRequest() else {
             throw NetworkError.invalidUrl
         }
         
@@ -35,7 +35,6 @@ class APIManager: APIManagerProtocol {
             }
 
             let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
             return try decoder.decode(T.self, from: data)
             
         } catch is DecodingError {
