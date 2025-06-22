@@ -11,6 +11,9 @@ struct APIConstants {
     static let tmdbBaseURL = "https://api.themoviedb.org/3"
     static let tmdbAPIKey = ""
     static let tmdbImageBaseURL = "https://image.tmdb.org/t/p/w500"
+    
+    static let popularMoviesPath = "/movie/popular"
+    static let searchMoviesPath = "/search/movie"
 }
 
 struct MovieResponse: Codable, Equatable {
@@ -63,7 +66,6 @@ struct Movie: Codable, Identifiable, Equatable {
 
 protocol MovieManagerProtocol {
     func fetchPopularMovies(page: Int) async throws -> MovieResponse
-    func fetchMovieDetails(id: Int) async throws -> Movie
     func searchMovies(query: String, page: Int) async throws -> MovieResponse
 }
 
@@ -76,20 +78,15 @@ class MovieManager: MovieManagerProtocol {
 
     func fetchPopularMovies(page: Int) async throws -> MovieResponse {
         let request = makeAuthedRequest(
-            path: "/movie/popular",
+            path: APIConstants.popularMoviesPath,
             queryItems: [URLQueryItem(name: "page", value: "\(page)")]
         )
         return try await apiManager.request(apiRequest: request)
     }
 
-    func fetchMovieDetails(id: Int) async throws -> Movie {
-        let request = makeAuthedRequest(path: "/movie/\(id)")
-        return try await apiManager.request(apiRequest: request)
-    }
-
     func searchMovies(query: String, page: Int) async throws -> MovieResponse {
         let request = makeAuthedRequest(
-            path: "/search/movie",
+            path: APIConstants.searchMoviesPath,
             queryItems: [
                 URLQueryItem(name: "query", value: query),
                 URLQueryItem(name: "page", value: "\(page)")

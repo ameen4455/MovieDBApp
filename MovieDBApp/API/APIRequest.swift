@@ -30,7 +30,8 @@ struct APIRequest {
     }
 
     func makeURLRequest() -> URLRequest? {
-        guard var components = URLComponents(string: urlString) else {
+        guard let url = URL(string: urlString),
+              var components = URLComponents(url: url, resolvingAgainstBaseURL: false) else {
             return nil
         }
 
