@@ -45,6 +45,7 @@ func getTestMovie() -> Movie {
         posterPath: "/pB8BM7pdXLWCbZr8dRvQypB7zTf.jpg",
         voteAverage: 8.4,
         voteCount: 25000,
-        popularity: 123.45
+        popularity: 123.45,
+        backdropPath: nil
     )
 }

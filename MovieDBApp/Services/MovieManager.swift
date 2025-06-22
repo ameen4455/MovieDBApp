@@ -9,11 +9,16 @@ import Foundation
 
 struct APIConstants {
     static let tmdbBaseURL = "https://api.themoviedb.org/3"
-    static let tmdbAPIKey = ""
     static let tmdbImageBaseURL = "https://image.tmdb.org/t/p/w300"
     
     static let popularMoviesPath = "/movie/popular"
     static let searchMoviesPath = "/search/movie"
+    static var tmdbAPIKey: String {
+        guard let key = Bundle.main.object(forInfoDictionaryKey: "TMDB_API_KEY") as? String else {
+            fatalError("TMDB_API_KEY not found in Info.plist")
+        }
+        return key
+    }
 }
 
 struct MovieResponse: Codable, Equatable {
