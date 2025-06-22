@@ -8,12 +8,12 @@
 import SwiftUI
 
 final class DependencyContainer {
-    let movieManager: MovieManagerProtocol
-    let favouriteManager: FavouriteManagerProtocol
+    let movieManager: MovieManager
+    let favouriteManager: FavouriteManager
 
     init(
-        movieManager: MovieManagerProtocol,
-        favouriteManager: FavouriteManagerProtocol
+        movieManager: MovieManager,
+        favouriteManager: FavouriteManager
     ) {
         self.movieManager = movieManager
         self.favouriteManager = favouriteManager
@@ -21,8 +21,8 @@ final class DependencyContainer {
 
     static func live() -> DependencyContainer {
         DependencyContainer(
-            movieManager: MovieManager(),
-            favouriteManager: FavouriteManager()
+            movieManager: TMDBMovieManager(),
+            favouriteManager: UserDefaultsFavouriteManager()
         )
     }
 

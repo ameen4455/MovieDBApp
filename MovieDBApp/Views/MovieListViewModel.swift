@@ -18,10 +18,10 @@ class MovieListViewModel: ObservableObject {
     @Published var totalPages = 1
     @Published var searchQuery = ""
 
-    private let movieManager: MovieManagerProtocol
+    private let movieManager: MovieManager
     private var cancellables = Set<AnyCancellable>()
 
-    init(movieManager: MovieManagerProtocol = MovieManager()) {
+    init(movieManager: MovieManager = TMDBMovieManager()) {
         self.movieManager = movieManager
         setupSearch()
     }

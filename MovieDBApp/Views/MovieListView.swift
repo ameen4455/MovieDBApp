@@ -11,7 +11,7 @@ struct MovieListView: View {
     @Environment(\.dependencyContainer) private var container: DependencyContainer
     @StateObject private var viewModel = MovieListViewModel()
     
-    init(movieManager: MovieManagerProtocol = MovieManager()) {
+    init(movieManager: MovieManager = TMDBMovieManager()) {
         _viewModel = StateObject(wrappedValue: MovieListViewModel(movieManager: movieManager))
     }
 

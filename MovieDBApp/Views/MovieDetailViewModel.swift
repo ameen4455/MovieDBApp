@@ -9,11 +9,11 @@ import Combine
 
 class MovieDetailViewModel: ObservableObject {
     @Published var isFavourite: Bool = false
-    private let manager: FavouriteManagerProtocol
+    private let manager: FavouriteManager
 
     let movie: Movie
 
-    init(movie: Movie, manager: FavouriteManagerProtocol = FavouriteManager()) {
+    init(movie: Movie, manager: FavouriteManager) {
         self.movie = movie
         self.manager = manager
         self.isFavourite = manager.isFavourite(movie)

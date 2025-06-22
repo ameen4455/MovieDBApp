@@ -5,7 +5,7 @@
 //  Created by Ameen Azeez on 22/06/25.
 //
 
-final class MockFavouriteManager: FavouriteManagerProtocol {
+final class MockFavouriteManager: FavouriteManager {
     static let shared = MockFavouriteManager()
     private init() {}
 

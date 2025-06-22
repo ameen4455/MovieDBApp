@@ -10,7 +10,7 @@ import SwiftUI
 struct MovieDetailView: View {
     @StateObject private var viewModel: MovieDetailViewModel
 
-    init(movie: Movie, favouritesManager: FavouriteManagerProtocol) {
+    init(movie: Movie, favouritesManager: FavouriteManager) {
         _viewModel = StateObject(wrappedValue: MovieDetailViewModel(movie: movie, manager: favouritesManager))
     }
 

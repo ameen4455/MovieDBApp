@@ -21,56 +21,12 @@ struct APIConstants {
     }
 }
 
-struct MovieResponse: Codable, Equatable {
-    let page: Int
-    let results: [Movie]
-    let totalPages: Int
-    let totalResults: Int
-
-    enum CodingKeys: String, CodingKey {
-        case page, results
-        case totalPages = "total_pages"
-        case totalResults = "total_results"
-    }
-}
-
-struct Movie: Codable, Identifiable, Equatable {
-    let id: Int
-    let title: String
-    let overview: String
-    let releaseDate: String?
-    let posterPath: String?
-    let voteAverage: Double
-    let voteCount: Int
-    let popularity: Double
-    let backdropPath: String?
-
-    enum CodingKeys: String, CodingKey {
-        case id, title, overview, popularity
-        case releaseDate = "release_date"
-        case posterPath = "poster_path"
-        case voteAverage = "vote_average"
-        case voteCount = "vote_count"
-        case backdropPath = "backdrop_path"
-    }
-    
-    var fullPosterURL: URL? {
-        guard let posterPath = posterPath else { return nil }
-        return URL(string: APIConstants.tmdbImageBaseURL + posterPath)
-    }
-    
-    var fullBackDropURL: URL? {
-        guard let backdropPath = backdropPath else { return nil }
-        return URL(string: APIConstants.tmdbImageBaseURL + backdropPath)
-    }
-}
-
-protocol MovieManagerProtocol {
+protocol MovieManager {
     func fetchPopularMovies(page: Int) async throws -> MovieResponse
     func searchMovies(query: String, page: Int) async throws -> MovieResponse
 }
 
-class MovieManager: MovieManagerProtocol {
+class TMDBMovieManager: MovieManager {
     private let apiManager: APIManagerProtocol
 
     init(apiManager: APIManagerProtocol = APIManager()) {

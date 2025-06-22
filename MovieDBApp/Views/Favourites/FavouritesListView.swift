@@ -10,7 +10,7 @@ import SwiftUI
 struct FavouritesListView: View {
     @StateObject private var viewModel: FavouritesViewModel
 
-    init(manager: FavouriteManagerProtocol) {
+    init(manager: FavouriteManager) {
         _viewModel = StateObject(wrappedValue: FavouritesViewModel(favouriteManager: manager))
     }
 

@@ -7,13 +7,13 @@
 
 import Foundation
 
-protocol FavouriteManagerProtocol {
+protocol FavouriteManager {
     var favourites: [Movie] { get }
     func toggleFavourite(_ movie: Movie)
     func isFavourite(_ movie: Movie) -> Bool
 }
 
-final class FavouriteManager: FavouriteManagerProtocol {
+final class UserDefaultsFavouriteManager: FavouriteManager {
     private let key = "favourite_movies"
     private let defaults: UserDefaults
 

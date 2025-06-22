@@ -10,12 +10,12 @@ import XCTest
 
 class MovieManagerTests: XCTestCase {
 
-    var sut: MovieManager!
+    var sut: TMDBMovieManager!
     var mockAPIManager: MockAPIManager!
 
     override func setUpWithError() throws {
         mockAPIManager = MockAPIManager()
-        sut = MovieManager(apiManager: mockAPIManager)
+        sut = TMDBMovieManager(apiManager: mockAPIManager)
     }
 
     override func tearDownWithError() throws {

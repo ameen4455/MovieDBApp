@@ -7,7 +7,7 @@
 
 import Foundation
 
-class MockMovieManager: MovieManagerProtocol {
+class MockMovieManager: MovieManager {
     func fetchPopularMovies(page: Int) async throws -> MovieResponse {
         return try loadResponse(from: "MockMovies")
 

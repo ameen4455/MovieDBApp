@@ -12,9 +12,9 @@ final class FavouritesViewModel: ObservableObject {
     @Published var selectedMovie: Movie?
     @Published var showFavouriteMovie = false
     
-    let favouriteManager: FavouriteManagerProtocol
+    let favouriteManager: FavouriteManager
 
-    init(favouriteManager: FavouriteManagerProtocol = FavouriteManager()) {
+    init(favouriteManager: FavouriteManager) {
         self.favouriteManager = favouriteManager
     }
 
