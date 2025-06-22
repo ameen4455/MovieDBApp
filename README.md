@@ -25,7 +25,7 @@ An iOS application built with SwiftUI that lets users browse popular movies and 
    ```
 
 3. TMDB API Key Setup:
-   - Visit the [TMDB API Documentation](https://developer.themoviedb.org/docs/authentication) and generate an API v4 access token.
+   - Visit the [TMDB API Documentation](https://developer.themoviedb.org/docs/authentication) and generate an API access token.
    - Open `Info.plist`
    - Add or update the TMDB_API_KEY entry as follows:
      ```

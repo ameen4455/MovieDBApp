@@ -25,6 +25,8 @@ struct MovieListView: View {
                         ProgressView("Loading Movies...").padding()
                     } else if let error = viewModel.errorMessage {
                         errorState(error: error)
+                    } else if viewModel.movies.isEmpty {
+                        emptyState
                     } else {
                         movieGrid
                         
@@ -51,6 +53,17 @@ struct MovieListView: View {
         .background(Color(.systemGray6))
         .cornerRadius(10)
         .padding([.horizontal, .top])
+    }
+    
+        VStack {
+            Text(viewModel.searchQuery.isEmpty
+                 ? "No movies found."
+                 : "No results for \"\(viewModel.searchQuery)\"")
+                .foregroundColor(.gray)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal)
+        }
+        .padding(.top, 40)
     }
     
     private var movieGrid: some View {
