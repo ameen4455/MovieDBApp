@@ -38,6 +38,7 @@ struct Movie: Codable, Identifiable, Equatable {
     let voteAverage: Double
     let voteCount: Int
     let popularity: Double
+    let backdropPath: String?
 
     enum CodingKeys: String, CodingKey {
         case id, title, overview, popularity
@@ -45,11 +46,17 @@ struct Movie: Codable, Identifiable, Equatable {
         case posterPath = "poster_path"
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
+        case backdropPath = "backdrop_path"
     }
     
     var fullPosterURL: URL? {
         guard let posterPath = posterPath else { return nil }
         return URL(string: APIConstants.tmdbImageBaseURL + posterPath)
+    }
+    
+    var fullBackDropURL: URL? {
+        guard let backdropPath = backdropPath else { return nil }
+        return URL(string: APIConstants.tmdbImageBaseURL + backdropPath)
     }
 }
 

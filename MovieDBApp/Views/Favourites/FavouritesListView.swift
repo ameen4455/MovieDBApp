@@ -19,33 +19,9 @@ struct FavouritesListView: View {
             ScrollView {
                 VStack {
                     if viewModel.favourites.isEmpty {
-                        VStack(spacing: 8) {
-                            Image(systemName: "heart.slash")
-                                .resizable()
-                                .frame(width: 64, height: 64)
-                                .foregroundColor(.gray)
-                                .padding(.vertical)
-                            
-                            Text("No favourites yet")
-                                .font(.headline)
-                                .foregroundColor(.secondary)
-                            
-                            Text("Mark movies as favourites to see them here.")
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
-                        }
-                        .multilineTextAlignment(.center)
-                        .padding()
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        emptyStateView
                     } else {
-                        ForEach(viewModel.favourites) { movie in
-                            Button {
-                                viewModel.selectedMovie = movie
-                                viewModel.showFavouriteMovie = true
-                            } label: {
-                                MovieRow(movie: movie)
-                            }
-                        }
+                        movieGrid
                     }
                     
                     // Hidden NavigationLink for programmatic navigation
@@ -75,5 +51,39 @@ struct FavouritesListView: View {
             EmptyView()
         }
     }
+    
+    private var emptyStateView: some View {
+        VStack(spacing: 8) {
+            Image(systemName: "heart.slash")
+                .resizable()
+                .frame(width: 64, height: 64)
+                .foregroundColor(.gray)
+                .padding(.vertical)
 
+            Text("No favourites yet")
+                .font(.headline)
+                .foregroundColor(.secondary)
+
+            Text("Mark movies as favourites to see them here.")
+                .font(.subheadline)
+                .foregroundColor(.gray)
+        }
+        .multilineTextAlignment(.center)
+        .padding()
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+    
+    private var movieGrid: some View {
+        LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 16) {
+            ForEach(viewModel.favourites) { movie in
+                Button {
+                    viewModel.selectedMovie = movie
+                    viewModel.showFavouriteMovie = true
+                } label: {
+                    MovieRow(movie: movie)
+                }
+            }
+        }
+        .padding(.top)
+    }
 }

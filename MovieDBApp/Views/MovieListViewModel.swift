@@ -80,12 +80,6 @@ class MovieListViewModel: ObservableObject {
         }
         isLoading = false
     }
-
-    func loadInitialMovies() {
-        Task {
-            await loadMovies(forPage: 1)
-        }
-    }
     
     func searchMovies(query: String) async {
         errorMessage = nil
@@ -101,13 +95,6 @@ class MovieListViewModel: ObservableObject {
 
         isSearching = false
     }
-
-    func loadMoreMovies() {
-        guard !isLoading && currentPage < totalPages else { return }
-        Task {
-            await loadMovies(forPage: currentPage + 1)
-        }
-    }
     
     func shouldLoadMore(movie: Movie) {
         if movie.id == movies.last?.id {
@@ -115,9 +102,20 @@ class MovieListViewModel: ObservableObject {
         }
     }
     
-    func retrySearch() {
+    func loadMoreMovies() {
+        guard !isLoading && currentPage < totalPages else { return }
         Task {
-            await searchMovies(query: searchQuery)
+            await loadMovies(forPage: currentPage + 1)
+        }
+    }
+    
+    func retryPressed() {
+        Task {
+            if searchQuery.isEmpty {
+                await loadMovies(forPage: 1)
+            } else {
+                await searchMovies(query: searchQuery)
+            }
         }
     }
 }

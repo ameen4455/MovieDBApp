@@ -17,27 +17,35 @@ struct MovieDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                if let url = viewModel.movie.fullPosterURL {
+                if let url = viewModel.movie.fullBackDropURL {
                     RemoteImageView(url: url)
-                        .aspectRatio(contentMode: .fit)
-                        .cornerRadius(12)
+                        .aspectRatio(16/9, contentMode: .fit)
+                        .cornerRadius(8)
+                        .clipped()
+                } else if let url = viewModel.movie.fullPosterURL {
+                    RemoteImageView(url: url)
+                        .aspectRatio(16/9, contentMode: .fit)
+                        .cornerRadius(8)
+                        .clipped()
                 }
 
                 Text(viewModel.movie.title)
                     .font(.title)
                     .fontWeight(.bold)
-
-                Text("Release Date: \(viewModel.movie.releaseDate ?? "N/A")")
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
-
-                Text("Rating: \(viewModel.movie.voteAverage, specifier: "%.1f") / 10")
-                    .font(.subheadline)
-                    .foregroundColor(.orange)
-
+                
                 Text(viewModel.movie.overview)
                     .font(.body)
                     .multilineTextAlignment(.leading)
+                
+                HStack {
+                    Text("Release Date: \(viewModel.movie.releaseDate ?? "N/A")")
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                    
+                    Text("Rating: \(viewModel.movie.voteAverage, specifier: "%.1f") / 10")
+                        .font(.subheadline)
+                        .foregroundColor(.orange)
+                }
             }
             .padding()
         }
@@ -57,27 +65,5 @@ struct MovieDetailView: View {
         .onAppear {
             viewModel.refreshFavouriteStatus()
         }
-    }
-}
-
-class MovieDetailViewModel: ObservableObject {
-    @Published var isFavourite: Bool = false
-    private let manager: FavouriteManagerProtocol
-
-    let movie: Movie
-
-    init(movie: Movie, manager: FavouriteManagerProtocol = FavouriteManager()) {
-        self.movie = movie
-        self.manager = manager
-        self.isFavourite = manager.isFavourite(movie)
-    }
-
-    func toggleFavourite() {
-        manager.toggleFavourite(movie)
-        isFavourite = manager.isFavourite(movie)
-    }
-    
-    func refreshFavouriteStatus() {
-        isFavourite = manager.isFavourite(movie)
     }
 }
