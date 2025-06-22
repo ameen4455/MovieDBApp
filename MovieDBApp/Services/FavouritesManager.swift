@@ -10,6 +10,7 @@ import Foundation
 protocol FavouriteManagerProtocol {
     var favourites: [Movie] { get }
     func toggleFavourite(_ movie: Movie)
+    func isFavourite(_ movie: Movie) -> Bool
 }
 
 final class FavouriteManager: FavouriteManagerProtocol {

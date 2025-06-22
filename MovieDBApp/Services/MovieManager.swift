@@ -10,7 +10,7 @@ import Foundation
 struct APIConstants {
     static let tmdbBaseURL = "https://api.themoviedb.org/3"
     static let tmdbAPIKey = ""
-    static let tmdbImageBaseURL = "https://image.tmdb.org/t/p/w500"
+    static let tmdbImageBaseURL = "https://image.tmdb.org/t/p/w300"
     
     static let popularMoviesPath = "/movie/popular"
     static let searchMoviesPath = "/search/movie"
@@ -51,17 +51,6 @@ struct Movie: Codable, Identifiable, Equatable {
         guard let posterPath = posterPath else { return nil }
         return URL(string: APIConstants.tmdbImageBaseURL + posterPath)
     }
-    
-    static let example = Movie(
-        id: 550,
-        title: "Fight Club",
-        overview: "A depressed man suffering from insomnia and alienation from society.",
-        releaseDate: "1999-10-15",
-        posterPath: "/pB8BM7pdXLWCbZr8dRvQypB7zTf.jpg",
-        voteAverage: 8.4,
-        voteCount: 25000,
-        popularity: 123.45
-    )
 }
 
 protocol MovieManagerProtocol {

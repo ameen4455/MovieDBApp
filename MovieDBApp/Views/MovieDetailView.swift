@@ -10,8 +10,8 @@ import SwiftUI
 struct MovieDetailView: View {
     @StateObject private var viewModel: MovieDetailViewModel
 
-    init(movie: Movie) {
-        _viewModel = StateObject(wrappedValue: MovieDetailViewModel(movie: movie))
+    init(movie: Movie, favouritesManager: FavouriteManagerProtocol) {
+        _viewModel = StateObject(wrappedValue: MovieDetailViewModel(movie: movie, manager: favouritesManager))
     }
 
     var body: some View {
@@ -51,7 +51,7 @@ struct MovieDetailView: View {
                     Image(systemName: viewModel.isFavourite ? "heart.fill" : "heart")
                         .foregroundColor(viewModel.isFavourite ? .red : .primary)
                 }
-                .accessibilityLabel(viewModel.isFavourite ? "Remove from Favourites" : "Add to Favourites")
+                .accessibilityIdentifier("favourite_button")
             }
         }
         .onAppear {
@@ -62,11 +62,11 @@ struct MovieDetailView: View {
 
 class MovieDetailViewModel: ObservableObject {
     @Published var isFavourite: Bool = false
-    private let manager: FavouriteManager
+    private let manager: FavouriteManagerProtocol
 
     let movie: Movie
 
-    init(movie: Movie, manager: FavouriteManager = FavouriteManager()) {
+    init(movie: Movie, manager: FavouriteManagerProtocol = FavouriteManager()) {
         self.movie = movie
         self.manager = manager
         self.isFavourite = manager.isFavourite(movie)

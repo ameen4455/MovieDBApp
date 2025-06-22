@@ -87,7 +87,7 @@ final class APIManagerTests: XCTestCase {
         mockSession.data = nil
         mockSession.response = nil
         mockSession.error = URLError(.badURL)
-        // Act & Assert
+        
         do {
             let _: EmptyDecodable = try await sut.request(
                 apiRequest: apiRequest
@@ -150,7 +150,7 @@ final class APIManagerTests: XCTestCase {
        
         let networkConnectionError = URLError(
             .notConnectedToInternet
-        ) // Or .cannotConnectToHost, .timedOut
+        )
        
         mockSession.data = nil
         mockSession.response = nil

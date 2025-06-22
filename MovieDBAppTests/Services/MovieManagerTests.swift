@@ -10,7 +10,7 @@ import XCTest
 
 class MovieManagerTests: XCTestCase {
 
-    var sut: MovieManager! // System Under Test
+    var sut: MovieManager!
     var mockAPIManager: MockAPIManager!
 
     override func setUpWithError() throws {
@@ -39,7 +39,7 @@ class MovieManagerTests: XCTestCase {
     }
 
     func test_fetchPopularMovies_successfulResponse() async throws {
-        let expectedResponse = MovieResponse(page: 1, results:  [Movie.example], totalPages: 10, totalResults: 100)
+        let expectedResponse = MovieResponse(page: 1, results:  [getTestMovie()], totalPages: 10, totalResults: 100)
         mockAPIManager.mockMovieResponse = expectedResponse
 
         let receivedResponse = try await sut.fetchPopularMovies(page: 1)
@@ -79,7 +79,7 @@ class MovieManagerTests: XCTestCase {
 
     func test_searchMovies_successfulResponse() async throws {
         // Given
-        let expectedResponse = MovieResponse(page: 1, results: [Movie.example], totalPages: 5, totalResults: 50)
+        let expectedResponse = MovieResponse(page: 1, results: [getTestMovie()], totalPages: 5, totalResults: 50)
         mockAPIManager.mockMovieResponse = expectedResponse
 
         // When

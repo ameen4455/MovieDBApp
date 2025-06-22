@@ -8,7 +8,12 @@
 import SwiftUI
 
 struct MovieListView: View {
+    @Environment(\.dependencyContainer) private var container: DependencyContainer
     @StateObject private var viewModel = MovieListViewModel()
+    
+    init(movieManager: MovieManagerProtocol = MovieManager()) {
+        _viewModel = StateObject(wrappedValue: MovieListViewModel(movieManager: movieManager))
+    }
 
     var body: some View {
         NavigationView {
@@ -46,7 +51,11 @@ struct MovieListView: View {
                             }
                         } else {
                             ForEach(viewModel.movies) { movie in
-                                NavigationLink(destination: MovieDetailView(movie: movie)) {
+                                NavigationLink(
+                                    destination: MovieDetailView(
+                                        movie: movie,
+                                        favouritesManager: container.favouriteManager)
+                                ) {
                                     MovieRow(movie: movie)
                                         .onAppear {
                                             viewModel.shouldLoadMore(movie: movie)

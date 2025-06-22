@@ -12,13 +12,13 @@ final class FavouritesViewModel: ObservableObject {
     @Published var selectedMovie: Movie?
     @Published var showFavouriteMovie = false
     
-    private let manager: FavouriteManagerProtocol
+    let favouriteManager: FavouriteManagerProtocol
 
-    init(manager: FavouriteManagerProtocol = FavouriteManager()) {
-        self.manager = manager
+    init(favouriteManager: FavouriteManagerProtocol = FavouriteManager()) {
+        self.favouriteManager = favouriteManager
     }
 
     func loadFavourites() {
-        favourites = manager.favourites
+        favourites = favouriteManager.favourites
     }
 }

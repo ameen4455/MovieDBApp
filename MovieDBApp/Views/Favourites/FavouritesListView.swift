@@ -8,7 +8,11 @@
 import SwiftUI
 
 struct FavouritesListView: View {
-    @StateObject private var viewModel = FavouritesViewModel()
+    @StateObject private var viewModel: FavouritesViewModel
+
+    init(manager: FavouriteManagerProtocol) {
+        _viewModel = StateObject(wrappedValue: FavouritesViewModel(favouriteManager: manager))
+    }
 
     var body: some View {
         NavigationView {
@@ -66,7 +70,7 @@ struct FavouritesListView: View {
     @ViewBuilder
     private var detailDestination: some View {
         if let movie = viewModel.selectedMovie {
-            MovieDetailView(movie: movie)
+            MovieDetailView(movie: movie, favouritesManager: viewModel.favouriteManager)
         } else {
             EmptyView()
         }

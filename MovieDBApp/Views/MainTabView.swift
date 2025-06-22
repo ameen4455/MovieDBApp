@@ -8,14 +8,16 @@
 import SwiftUI
 
 struct MainTabView: View {
+    @Environment(\.dependencyContainer) private var container: DependencyContainer
+
     var body: some View {
         TabView {
-            MovieListView()
+            MovieListView(movieManager: container.movieManager)
                 .tabItem {
                     Label("Home", systemImage: "film")
                 }
 
-            FavouritesListView()
+            FavouritesListView(manager: container.favouriteManager)
                 .tabItem {
                     Label("Favourites", systemImage: "heart.fill")
                 }

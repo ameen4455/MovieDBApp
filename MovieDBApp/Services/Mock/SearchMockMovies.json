@@ -1,0 +1,26 @@
+{
+  "page": 1,
+  "results": [
+    {
+      "adult": false,
+      "backdrop_path": "/uIpJPDNFoeX0TVml9smPrs9KUVx.jpg",
+      "genre_ids": [
+        27,
+        9648
+      ],
+      "id": 574475,
+      "original_language": "en",
+      "original_title": "Search Mock Movie",
+      "overview": "Plagued by a violent recurring nightmare, college student Stefanie heads home to track down the one person who might be able to break the cycle and save her family from the grisly demise that inevitably awaits them all.",
+      "popularity": 1124.222,
+      "poster_path": "/6WxhEvFsauuACfv8HyoVX6mZKFj.jpg",
+      "release_date": "2025-05-14",
+      "title": "Search Mock Movie",
+      "video": false,
+      "vote_average": 7.229,
+      "vote_count": 1099
+    }
+  ],
+  "total_pages": 1,
+  "total_results": 1020572
+}

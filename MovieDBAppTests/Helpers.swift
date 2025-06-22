@@ -35,3 +35,16 @@ struct TestCodable: Codable, Equatable {
 struct EmptyDecodable: Codable {
     
 }
+
+func getTestMovie() -> Movie {
+    return Movie(
+        id: 550,
+        title: "Fight Club",
+        overview: "A depressed man suffering from insomnia and alienation from society.",
+        releaseDate: "1999-10-15",
+        posterPath: "/pB8BM7pdXLWCbZr8dRvQypB7zTf.jpg",
+        voteAverage: 8.4,
+        voteCount: 25000,
+        popularity: 123.45
+    )
+}

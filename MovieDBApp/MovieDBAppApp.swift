@@ -9,9 +9,20 @@ import SwiftUI
 
 @main
 struct MovieDBAppApp: App {
+    private let dependencyContainer: DependencyContainer
+
+    init() {
+        if ProcessInfo.processInfo.arguments.contains("UITestMode") {
+            self.dependencyContainer = .mock()
+        } else {
+            self.dependencyContainer = .live()
+        }
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(\.dependencyContainer, dependencyContainer)
         }
     }
 }
