@@ -54,6 +54,9 @@ struct MovieDetailView: View {
                 .accessibilityLabel(viewModel.isFavourite ? "Remove from Favourites" : "Add to Favourites")
             }
         }
+        .onAppear {
+            viewModel.refreshFavouriteStatus()
+        }
     }
 }
 
@@ -71,6 +74,10 @@ class MovieDetailViewModel: ObservableObject {
 
     func toggleFavourite() {
         manager.toggleFavourite(movie)
+        isFavourite = manager.isFavourite(movie)
+    }
+    
+    func refreshFavouriteStatus() {
         isFavourite = manager.isFavourite(movie)
     }
 }

@@ -12,86 +12,61 @@ struct MovieListView: View {
 
     var body: some View {
         NavigationView {
-            ScrollView {
-                LazyVStack {
-                    if viewModel.movies.isEmpty && viewModel.isLoading {
-                        ProgressView("Loading Movies...")
-                            .padding()
-                    } else if let error = viewModel.errorMessage {
-                        VStack {
-                            Text("Error: \(error)")
-                                .foregroundColor(.red)
+            VStack {
+                
+                HStack {
+                    Image(systemName: "magnifyingglass")
+                        .foregroundColor(.gray)
+                    TextField("Search movies...", text: $viewModel.searchQuery)
+                        .textFieldStyle(PlainTextFieldStyle())
+                        .autocapitalization(.none)
+                }
+                .padding(10)
+                .background(Color(.systemGray6))
+                .cornerRadius(10)
+                .padding([.horizontal, .top])
+                
+                ScrollView {
+                    LazyVStack {
+                        if (viewModel.movies.isEmpty && viewModel.isLoading) || viewModel.isSearching {
+                            ProgressView("Loading Movies...")
                                 .padding()
-                            Button("Retry") {
-                                viewModel.loadInitialMovies()
-                            }
-                        }
-                    } else {
-                        ForEach(viewModel.movies) { movie in
-                            NavigationLink(destination: MovieDetailView(movie: movie)) {
-                                MovieRow(movie: movie)
-                                    .onAppear {
-                                        viewModel.shouldLoadMore(movie: movie)
+                        } else if let error = viewModel.errorMessage {
+                            VStack {
+                                Text("Error: \(error)")
+                                    .foregroundColor(.red)
+                                    .padding()
+                                Button("Retry") {
+                                    if viewModel.searchQuery.isEmpty {
+                                        viewModel.loadInitialMovies()
+                                    } else {
+                                        viewModel.retrySearch()
                                     }
+                                }
                             }
-                        }
-
-                        if viewModel.isLoading {
-                            ProgressView()
-                                .padding()
+                        } else {
+                            ForEach(viewModel.movies) { movie in
+                                NavigationLink(destination: MovieDetailView(movie: movie)) {
+                                    MovieRow(movie: movie)
+                                        .onAppear {
+                                            viewModel.shouldLoadMore(movie: movie)
+                                        }
+                                }
+                            }
+                            
+                            if viewModel.isLoading {
+                                ProgressView()
+                                    .padding()
+                            }
                         }
                     }
+                    .padding(.horizontal)
                 }
-                .padding(.horizontal)
-            }
-            .navigationTitle("Popular Movies")
-            .onAppear {
-                if viewModel.movies.isEmpty {
-                    viewModel.loadInitialMovies()
-                }
+                .navigationTitle("Popular Movies")
             }
         }
     }
 }
-
-// MARK: - MovieRow (Individual Movie Item View)
-
-struct MovieRow: View {
-    let movie: Movie
-
-    var body: some View {
-        VStack(alignment: .leading) {
-            HStack(alignment: .center, spacing: 12) {
-                
-                RemoteImageView(url: movie.fullPosterURL)
-                    .frame(width: 120, height: 180)
-                    .cornerRadius(8)
-
-                VStack(alignment: .leading) {
-                    Text(movie.title)
-                        .font(.headline)
-                        .lineLimit(2)
-                        .multilineTextAlignment(.leading)
-                    Text(movie.releaseDate ?? "N/A")
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                    Text("Rating: \(movie.voteAverage, specifier: "%.1f")/10")
-                        .font(.caption)
-                        .foregroundColor(.orange)
-                    Text(movie.overview)
-                        .font(.body)
-                        .lineLimit(3)
-                        .padding(.top, 4)
-                        .multilineTextAlignment(.leading)
-                }
-            }
-            .padding(.vertical)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-    }
-}
-
-// MARK: - Preview Provider (for Xcode Canvas)
 
 #Preview {
     MovieListView()

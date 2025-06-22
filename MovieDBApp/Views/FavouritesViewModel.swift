@@ -9,7 +9,9 @@ import Foundation
 
 final class FavouritesViewModel: ObservableObject {
     @Published var favourites: [Movie] = []
-
+    @Published var selectedMovie: Movie?
+    @Published var showFavouriteMovie = false
+    
     private let manager: FavouriteManagerProtocol
 
     init(manager: FavouriteManagerProtocol = FavouriteManager()) {

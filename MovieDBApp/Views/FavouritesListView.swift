@@ -20,7 +20,7 @@ struct FavouritesListView: View {
                                 .resizable()
                                 .frame(width: 64, height: 64)
                                 .foregroundColor(.gray)
-                                .padding(.bottom, 8)
+                                .padding(.vertical)
                             
                             Text("No favourites yet")
                                 .font(.headline)
@@ -35,17 +35,41 @@ struct FavouritesListView: View {
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                     } else {
                         ForEach(viewModel.favourites) { movie in
-                            NavigationLink(destination: MovieDetailView(movie: movie)) {
+                            Button {
+                                viewModel.selectedMovie = movie
+                                viewModel.showFavouriteMovie = true
+                            } label: {
                                 MovieRow(movie: movie)
                             }
                         }
                     }
+                    
+                    // Hidden NavigationLink for programmatic navigation
+                    NavigationLink(
+                        destination: detailDestination,
+                        isActive: $viewModel.showFavouriteMovie
+                    ) {
+                        EmptyView()
+                    }
+                    .hidden()
+                    
+                   
                 }.padding(.horizontal)
+            }
+            .onAppear {
+                viewModel.loadFavourites()
             }
             .navigationTitle("Favourites")
         }
-        .onAppear {
-            viewModel.loadFavourites()
+    }
+    
+    @ViewBuilder
+    private var detailDestination: some View {
+        if let movie = viewModel.selectedMovie {
+            MovieDetailView(movie: movie)
+        } else {
+            EmptyView()
         }
     }
+
 }

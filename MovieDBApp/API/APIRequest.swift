@@ -44,6 +44,7 @@ struct APIRequest {
 
         var request = URLRequest(url: finalURL)
         request.httpMethod = method.rawValue
+        request.cachePolicy = .reloadIgnoringLocalAndRemoteCacheData
 
         for (key, value) in headers {
             request.setValue(value, forHTTPHeaderField: key)
