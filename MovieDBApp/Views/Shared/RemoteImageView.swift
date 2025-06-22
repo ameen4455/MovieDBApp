@@ -13,15 +13,12 @@ struct RemoteImageView: View {
 
     var body: some View {
         ZStack {
-            // Placeholder
             Rectangle()
                 .fill(Color.gray.opacity(0.3))
-
             if let image = image {
                 Image(uiImage: image)
                     .resizable()
-                    .scaledToFill()
-                    .clipped()
+                    .scaledToFit()
             }
         }
         .onAppear(perform: loadImage)

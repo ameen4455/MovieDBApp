@@ -22,11 +22,26 @@ struct MovieDetailView: View {
                         .aspectRatio(16/9, contentMode: .fit)
                         .cornerRadius(8)
                         .clipped()
-                } else if let url = viewModel.movie.fullPosterURL {
-                    RemoteImageView(url: url)
-                        .aspectRatio(16/9, contentMode: .fit)
-                        .cornerRadius(8)
-                        .clipped()
+                }
+                
+                HStack(alignment: .top) {
+                    VStack(alignment: .leading, spacing: 4) {
+                        if let date = viewModel.movie.releaseDate {
+                            Text("RELEASE DATE")
+                                .font(.system(size: 12))
+                                .foregroundColor(Color.primary.opacity(0.4))
+                                .multilineTextAlignment(.leading)
+                            
+                            Text("\(date)")
+                                .font(.system(size: 15, weight: .bold))
+                                .foregroundColor(Color.primary.opacity(0.6))
+                                .multilineTextAlignment(.leading)
+                        }
+                    }
+                    
+                    Spacer()
+                    
+                    RatingBadge(rating: viewModel.movie.voteAverage)
                 }
 
                 Text(viewModel.movie.title)
@@ -37,15 +52,6 @@ struct MovieDetailView: View {
                     .font(.body)
                     .multilineTextAlignment(.leading)
                 
-                HStack {
-                    Text("Release Date: \(viewModel.movie.releaseDate ?? "N/A")")
-                        .font(.subheadline)
-                        .foregroundColor(.gray)
-                    
-                    Text("Rating: \(viewModel.movie.voteAverage, specifier: "%.1f") / 10")
-                        .font(.subheadline)
-                        .foregroundColor(.orange)
-                }
             }
             .padding()
         }

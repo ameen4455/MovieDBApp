@@ -12,9 +12,9 @@ struct MovieRow: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            RemoteImageView(url: movie.fullPosterURL, aspectRatio: 3/10)
+            RemoteImageView(url: movie.fullPosterURL)
+                .aspectRatio(2/3, contentMode: .fill)
                 .cornerRadius(8)
-                .clipped()
             
             VStack(alignment: .leading, spacing: 4) {
                 Text(movie.title)
@@ -25,26 +25,5 @@ struct MovieRow: View {
                 RatingBadge(rating: movie.voteAverage)
             }
         }
-    }
-}
-
-
-struct RatingBadge: View {
-    let rating: Double
-
-    var body: some View {
-        HStack(spacing: 4) {
-            Image(systemName: "star")
-                .foregroundColor(Color.primary.opacity(0.7))
-                .font(.system(size: 11, weight: .semibold))
-
-            Text(String(format: "%.1f", rating))
-                .foregroundColor(Color.primary.opacity(0.7))
-                .font(.system(size: 12, weight: .semibold))
-        }
-        .padding(.horizontal, 8)
-        .padding(.vertical, 4)
-        .background(Color.primary.opacity(0.2))
-        .cornerRadius(4)
     }
 }
