@@ -55,6 +55,7 @@ struct MovieListView: View {
         .padding([.horizontal, .top])
     }
     
+    private var emptyState: some View {
         VStack {
             Text(viewModel.searchQuery.isEmpty
                  ? "No movies found."
